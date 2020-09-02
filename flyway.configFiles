@@ -1,0 +1,8 @@
+#flyway
+flyway.locations=classpath:/db/migration/local
+flyway.url=jdbc:postgresql://localhost:5432/spring_vue_sample
+flyway.user=takachanman
+flyway.password=
+flyway.baselineOnMigrate=true
+flyway.baselineVersion=1.0
+flyway.baselineDescription=Initial
