@@ -14,23 +14,23 @@ import lombok.Data;
 @Data
 public class UserMessage implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    
-    @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	private static final long serialVersionUID = 1L;
 
-    private String name;
-    
-    private String title;
-    
-    private String category;
-    
-    private String text;
-    
-    private Integer userId;
-    
-    private Timestamp createdDate;
-    
-    private Timestamp updateDate;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	private String name;
+
+	private String title;
+
+	private String category;
+
+	private String text;
+
+	private Integer userId;
+
+	private Timestamp createdDate;
+
+	private Timestamp updateDate;
 }

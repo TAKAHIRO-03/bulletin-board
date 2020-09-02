@@ -7,5 +7,4 @@ import com.springvuesample.domain.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    
 }

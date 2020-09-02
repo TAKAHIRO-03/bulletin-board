@@ -10,35 +10,34 @@ import javax.persistence.Id;
 
 import lombok.Data;
 
-
 @Entity
 @Data
 public class UserBranchDepartment implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    
-    @Id
+	private static final long serialVersionUID = 1L;
+
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	private Long id;
 
-    private String account;
+	private String account;
 
-    private String password;
+	private String password;
 
-    private String name;
+	private String name;
 
-    private String branch;
+	private String branch;
 
-    private String department;
+	private String department;
 
-    private Integer branchId;
+	private Integer branchId;
 
-    private Integer departmentId;
+	private Integer departmentId;
 
-    private Integer isStopped;
+	private Integer isStopped;
 
-    private Timestamp createdDate;
+	private Timestamp createdDate;
 
-    private Timestamp updatedDate;
+	private Timestamp updatedDate;
 
 }

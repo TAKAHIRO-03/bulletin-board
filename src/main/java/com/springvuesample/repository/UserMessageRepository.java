@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.springvuesample.domain.UserMessage;
 
 @Repository
-public interface UserMessageRepository extends JpaRepository<UserMessage, Long>{
+public interface UserMessageRepository extends JpaRepository<UserMessage, Long> {
 
 }

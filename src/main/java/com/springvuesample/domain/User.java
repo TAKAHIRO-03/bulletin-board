@@ -1,7 +1,7 @@
 package com.springvuesample.domain;
 
-import java.sql.Timestamp;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,17 +22,17 @@ public class User implements Serializable {
 
 	private String account;
 
-    private String password;
-    
-    private String name;
+	private String password;
 
-    private Integer branchId;
+	private String name;
 
-    private Integer departmentId;
+	private Integer branchId;
 
-    private Integer isStopped;
+	private Integer departmentId;
 
-    private Timestamp createdDate;
+	private Integer isStopped;
 
-    private Timestamp updatedDate;
+	private Timestamp createdDate;
+
+	private Timestamp updatedDate;
 }

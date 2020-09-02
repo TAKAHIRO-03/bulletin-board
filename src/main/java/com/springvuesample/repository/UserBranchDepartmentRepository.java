@@ -7,5 +7,5 @@ import com.springvuesample.domain.UserBranchDepartment;
 
 @Repository
 public interface UserBranchDepartmentRepository extends JpaRepository<UserBranchDepartment, Long> {
-    
+
 }

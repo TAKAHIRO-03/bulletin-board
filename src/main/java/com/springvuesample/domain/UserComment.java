@@ -14,21 +14,21 @@ import lombok.Data;
 @Data
 public class UserComment implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    
-    @Id
+	private static final long serialVersionUID = 1L;
+
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    private String name;
-    
-    private String text;
-    
-    private Integer userId;
-    
-    private Integer messageId;
-    
-    private Timestamp createdDate;
-    
-    private Timestamp updatedDate;
+	private Long id;
+
+	private String name;
+
+	private String text;
+
+	private Integer userId;
+
+	private Integer messageId;
+
+	private Timestamp createdDate;
+
+	private Timestamp updatedDate;
 }

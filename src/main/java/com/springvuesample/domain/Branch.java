@@ -24,6 +24,6 @@ public class Branch implements Serializable {
 
 	private Timestamp createdDate;
 
-    private Timestamp updatedDate;
+	private Timestamp updatedDate;
 
 }

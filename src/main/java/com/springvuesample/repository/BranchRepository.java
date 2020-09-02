@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.springvuesample.domain.Branch;
 
 @Repository
-public interface BranchRepository extends JpaRepository<Branch, Long>{
-    
+public interface BranchRepository extends JpaRepository<Branch, Long> {
+
 }

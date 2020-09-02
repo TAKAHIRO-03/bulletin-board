@@ -1,7 +1,8 @@
 package com.springvuesample.domain;
 
-import lombok.Data;
 import java.io.Serializable;
+
+import lombok.Data;
 
 @Data
 public class CurrencyAddRequest implements Serializable {
@@ -10,5 +11,5 @@ public class CurrencyAddRequest implements Serializable {
 
 	private String name;
 	private String symbol;
-	
+
 }
