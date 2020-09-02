@@ -1,5 +1,6 @@
 package com.springvuesample.domain;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Entity;
@@ -11,7 +12,9 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Branches {
+public class Branch implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,7 +1,7 @@
 package com.springvuesample.domain;
 
 import java.math.BigDecimal;
-
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,9 +12,10 @@ import lombok.val;
 
 @Entity
 @Data
-public class Currency {
+public class Currency implements Serializable {
 
-	/** 自動採番ID */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
