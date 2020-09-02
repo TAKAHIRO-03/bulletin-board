@@ -1,10 +1,8 @@
 package com.springvuesample.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class CurrencyAddRequest {
 
 	private String name;

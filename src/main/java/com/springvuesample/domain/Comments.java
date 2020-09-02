@@ -1,33 +1,25 @@
 package com.springvuesample.domain;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.val;
+import lombok.Data;
+
 
 @Entity
-@Setter
-@Getter
+@Data
 public class Comments {
 
-	/** 自動採番ID */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	/** 仮想通貨名 */
-	private String name;
+	private String text;
 
-	/** シンボル */
-	private String symbol;
+    private Integer userId;
 
-	/** 数量 */
-    private BigDecimal amount;
+    private Integer messageId;
     
 }
