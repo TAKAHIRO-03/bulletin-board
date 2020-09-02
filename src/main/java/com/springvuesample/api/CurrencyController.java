@@ -23,6 +23,7 @@ public class CurrencyController {
 
 	@GetMapping("/")
 	public ResponseEntity<CurrencyResponse> findAll() {
+
 		val currencies = currencyService.findAll();
 		val currencyResponse = CurrencyResponse.builder()
 				.currencies(currencies)

@@ -1,7 +1,9 @@
 package com.springvuesample.domain;
 
-import java.math.BigDecimal;
 import java.io.Serializable;
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +19,7 @@ public class Currency implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 

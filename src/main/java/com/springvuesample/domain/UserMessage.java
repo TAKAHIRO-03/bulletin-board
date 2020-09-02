@@ -3,6 +3,7 @@ package com.springvuesample.domain;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,7 @@ public class UserMessage implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -28,9 +30,12 @@ public class UserMessage implements Serializable {
 
 	private String text;
 
+	@Column(name = "user_id")
 	private Integer userId;
 
+	@Column(name = "created_date")
 	private Timestamp createdDate;
 
-	private Timestamp updateDate;
+	@Column(name = "updated_date")
+	private Timestamp updatedDate;
 }
