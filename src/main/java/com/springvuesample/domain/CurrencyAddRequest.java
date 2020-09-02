@@ -8,6 +8,6 @@ import lombok.Setter;
 public class CurrencyAddRequest {
 
 	private String name;
-
 	private String symbol;
+	
 }

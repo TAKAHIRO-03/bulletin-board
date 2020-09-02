@@ -1,7 +1,7 @@
 .DS_Store
-node_modules
-/dist
-
+/spring-vue-sample-cliant/node_modules
+/spring-vue-sample-cliant/dist
+/.gradle
 
 # local env files
 .env.local
@@ -21,4 +21,5 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+*.class
 
