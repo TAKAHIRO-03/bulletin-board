@@ -21,11 +21,16 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
-    // ここを追加
     {
       path: '/currency',
       name: 'currency',
       component: () => import(/* webpackChunkName: "currency" */ './views/Currency.vue')
-    }
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: () => import(/* webpackChunkName: "currency" */ './views/User.vue')
+    },
+
   ]
 })

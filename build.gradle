@@ -31,6 +31,8 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	compile group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.4'
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
+	compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.3.4.RELEASE'
 }
 
 

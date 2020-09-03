@@ -86,22 +86,17 @@
     },
     methods: {
       refresh: async function () {
-        const res = await axios.get('http://localhost:8888/')
+        const res = await axios.get('http://localhost:8888/currency')
         this.currencies = res.data.currencies
-        console.info(this.currencies)
       },
       addCurrency: async function () {
-        await axios.post('http://localhost:8888/', this.request)
+        await axios.post('http://localhost:8888/currency', this.request)
         await this.refresh()
       },
       deleteCurrency: async function (id) {
-        await axios.delete('http://localhost:8888/' + id)
+        await axios.delete('http://localhost:8888/currency/' + id)
         await this.refresh()
       },
     }
   }
 </script>
-
-<style scoped>
-
-</style>
