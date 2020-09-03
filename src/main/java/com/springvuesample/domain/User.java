@@ -12,8 +12,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Data
 @Table(name = "users")
@@ -48,4 +54,5 @@ public class User implements Serializable {
 
 	@Column(name = "updated_date")
 	private Timestamp updatedDate;
+
 }

@@ -3,7 +3,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 	id 'java'
 	id "org.flywaydb.flyway" version "6.5.5"
-	id "com.moowork.node" version "1.3.1" // ★ 追加
+	id "com.moowork.node" version "1.3.1"
 }
 
 group = 'com.spring-vue-sample'
@@ -23,7 +23,6 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.flywaydb:flyway-core'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'org.postgresql:postgresql'
@@ -31,7 +30,10 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	compile group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.4'
 }
+
+
 
 flyway {
 	url = 'jdbc:postgresql://localhost:5432/spring_vue_sample'
@@ -46,14 +48,5 @@ test {
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
-
-task buildVue(type: YarnTask) {
-    execOverrides {
-        it.workingDir = './spring-vue-sample-cliant'
-    }
-    args = ['build']
-}
-
-build.dependsOn buildVue
 
 apply plugin: "org.flywaydb.flyway"

@@ -2,6 +2,7 @@
 /spring-vue-sample-cliant/node_modules
 /spring-vue-sample-cliant/dist
 /.gradle
+.project
 
 # local env files
 .env.local
