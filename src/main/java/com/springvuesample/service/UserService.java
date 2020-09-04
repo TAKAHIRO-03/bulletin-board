@@ -1,16 +1,18 @@
 package com.springvuesample.service;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.List;
+import java.util.Collections;
 
 import javax.persistence.EntityNotFoundException;
 
 import com.springvuesample.domain.User;
 import com.springvuesample.repository.UserRepository;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -23,11 +25,18 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public List<User> findAll() {
-        return this.userRepository.findAll();
+
+        val users = this.userRepository.findAll();
+
+        if (CollectionUtils.isEmpty(users)) {
+            return Collections.emptyList();
+        }
+
+        return users;
     }
 
     public User findById(final String id) {
-        return this.userRepository.findById(parseIdParam(id)).orElseThrow(IllegalArgumentException::new);
+        return this.userRepository.findById(StringToLongConverter.parseIdParam(id)).orElseThrow(IllegalArgumentException::new);
     }
 
     public void create(final User user) {
@@ -36,7 +45,7 @@ public class UserService {
     }
 
     public void update(final String id, final User user) throws EntityNotFoundException, IllegalArgumentException {
-        val registedUser = this.userRepository.getOne(parseIdParam(id));
+        val registedUser = this.userRepository.getOne(StringToLongConverter.parseIdParam(id));
 
         if (!passwordEncoder.matches(user.getPassword(), registedUser.getPassword())) {
             registedUser.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -52,15 +61,6 @@ public class UserService {
     }
 
     public void deleteById(final String id) {
-        this.userRepository.deleteById(parseIdParam(id));
+        this.userRepository.deleteById(StringToLongConverter.parseIdParam(id));
     }
-
-    private Long parseIdParam(final String pathId) throws IllegalArgumentException {
-        if (!pathId.matches("^[0-9]*$") || StringUtils.isBlank(pathId)) {
-            throw new IllegalArgumentException();
-        }
-
-        return Long.valueOf(pathId);
-    }
-
 }

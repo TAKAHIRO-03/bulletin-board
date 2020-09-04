@@ -9,7 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @ToString
-public class UserDto implements Serializable {
+public class UserForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

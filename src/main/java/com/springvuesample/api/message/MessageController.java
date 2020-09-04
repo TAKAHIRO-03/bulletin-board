@@ -1,12 +1,10 @@
-package com.springvuesample.api.user;
+package com.springvuesample.api.message;
 
 import javax.persistence.EntityNotFoundException;
 
 import com.springvuesample.api.EmptyJsonBody;
-import com.springvuesample.domain.User;
-import com.springvuesample.service.BranchService;
-import com.springvuesample.service.DepartmentService;
-import com.springvuesample.service.UserService;
+import com.springvuesample.domain.Message;
+import com.springvuesample.service.MessageService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,54 +22,50 @@ import lombok.val;
 import ma.glasnost.orika.MapperFactory;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/messages")
 @RequiredArgsConstructor
-public class UserController {
+public class MessageController {
 
-    private final UserService userService;
-    private final BranchService branchService;
-    private final DepartmentService departmentService;
+    private final MessageService messageService;
     private final MapperFactory mapperFactory;
 
     @GetMapping
     public ResponseEntity<?> findAll() {
-        val users = userService.findAll();
+        val messages = messageService.findAll();
 
-        if(users.isEmpty()){
+        if(messages.isEmpty()){
             return new ResponseEntity<>(new EmptyJsonBody(), HttpStatus.OK);
         }
 
-        val usersResponse = UserResponse.builder().users(users).build();
-        return new ResponseEntity<>(usersResponse, HttpStatus.OK);
+        val messageResponce = MessageResponce.builder().messages(messages).build();
+        return new ResponseEntity<>(messageResponce, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable final String id) {
         try {
-            val user = userService.findById(id);
-            val userResponse = UserResponse.builder().user(user).build();
-            return new ResponseEntity<>(userResponse, HttpStatus.OK);
+            val message = messageService.findById(id);
+            val messageResponce = MessageResponce.builder().message(message).build();
+            return new ResponseEntity<>(messageResponce, HttpStatus.OK);
         } catch (final IllegalArgumentException e) {
             return new ResponseEntity<>(new EmptyJsonBody(), HttpStatus.OK);
         }
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> create(@RequestBody final UserForm dto) {
-        val mapper = mapperFactory.getMapperFacade(UserForm.class, User.class);
-        val user = mapper.map(dto);
-        user.setDepartment(departmentService.getOne(dto.getDepartment()));
-        user.setBranch(branchService.getOne(dto.getBranch()));
-        this.userService.create(user);
+    public ResponseEntity<HttpStatus> create(@RequestBody final MessageForm form) {
+        val mapper = mapperFactory.getMapperFacade(MessageForm.class, Message.class);
+        val message = mapper.map(form);
+        this.messageService.create(message);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<HttpStatus> update(@PathVariable final String id, @RequestBody final UserForm dto) {
+    public ResponseEntity<HttpStatus> update(@PathVariable final String id, @RequestBody final MessageForm form) {
 
         try {
-            val mapper = mapperFactory.getMapperFacade(UserForm.class, User.class);
-            this.userService.update(id, mapper.map(dto));
+            val mapper = mapperFactory.getMapperFacade(MessageForm.class, Message.class);
+            this.messageService.update(id, mapper.map(form));
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (final EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -83,7 +77,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable final String id) {
-        this.userService.deleteById(id);
+        this.messageService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

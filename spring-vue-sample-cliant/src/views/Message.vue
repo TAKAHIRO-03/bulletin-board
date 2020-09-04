@@ -1,4 +1,8 @@
 <template>
+  <div>
+    <div class="flash" v-if="show === true">
+      {{ message }}
+    </div>
     <el-form ref="form" :model="form" label-width="150px">
         <el-form-item label="件名">
             <el-input v-model="form.title"></el-input>
@@ -7,12 +11,13 @@
             <el-input v-model="form.category"></el-input>
         </el-form-item>
         <el-form-item label="投稿内容">
-            <el-input type="textarea" v-model="form.content"></el-input>
+            <el-input type="textarea" v-model="form.text"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="addMessage">投稿</el-button>
         </el-form-item>
     </el-form>
+  </div>
 </template>
 
 <script>
@@ -26,16 +31,28 @@
         form: {
           title: undefined,
           category: undefined,
-          content: undefined,
+          text: undefined,
         },
+        show: false,
+        message: undefined
       }
     },
     created: async function () {
     },
     methods: {
       addMessage: async function () {
-        await axios.post('http://localhost:8888/users', this.form)
-        this.$router.push('currency') 
+        await axios.post('http://localhost:8888/messages', this.form).catch(error => {
+          if(error.response != 201){
+            this.message = "メッセージ作成に失敗しました"
+          }else {
+            this.message = "メッセージ作成に成功しました"
+          }
+        })
+        this.show = true;
+        setTimeout(() => {
+          this.show = false}
+          ,3000
+        );
       },
     }
   }
