@@ -7,5 +7,4 @@ import com.springvuesample.domain.Comment;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-
 }

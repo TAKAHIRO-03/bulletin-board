@@ -1,7 +1,6 @@
 package com.springvuesample.service;
 
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.List;
 import java.util.Collections;
 
@@ -63,4 +62,14 @@ public class UserService {
     public void deleteById(final String id) {
         this.userRepository.deleteById(StringToLongConverter.parseIdParam(id));
     }
+
+    /**
+     * 
+     * 更新用
+     * 
+     */
+    public User getOne(final Long id){
+        return this.userRepository.getOne(id);
+    }
+
 }
