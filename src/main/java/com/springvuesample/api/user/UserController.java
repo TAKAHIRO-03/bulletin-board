@@ -42,7 +42,6 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable final String id) {
-
         try {
             val user = userService.findById(id);
             val userResponse = UserResponse.builder().user(user).build();
@@ -54,9 +53,6 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<HttpStatus> create(@RequestBody final UserDto dto) {
-
-        System.out.println(dto);
-
         val mapper = mapperFactory.getMapperFacade(UserDto.class, User.class);
         val user = mapper.map(dto);
         user.setDepartment(departmentService.getOne(dto.getDepartment()));

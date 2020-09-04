@@ -27,10 +27,29 @@ export default new Router({
       component: () => import(/* webpackChunkName: "currency" */ './views/Currency.vue')
     },
     {
-      path: '/user',
-      name: 'user',
-      component: () => import(/* webpackChunkName: "currency" */ './views/User.vue')
+      path: '/signup',
+      name: 'signup',
+      component: () => import(/* webpackChunkName: "currency" */ './views/Signup.vue')
     },
-
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import(/* webpackChunkName: "currency" */ './views/Login.vue')
+    },
+    {
+      path: '/message',
+      name: 'message',
+      component: () => import(/* webpackChunkName: "currency" */ './views/Message.vue')
+    },
+    {
+      path: '/setting',
+      name: 'setting',
+      component: () => import(/* webpackChunkName: "currency" */ './views/Setting.vue')
+    },
+    {
+      path: '/management',
+      name: 'management',
+      component: () => import(/* webpackChunkName: "currency" */ './views/Management.vue')
+    },
   ]
 })
