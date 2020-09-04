@@ -41,13 +41,15 @@
     },
     methods: {
       addMessage: async function () {
-        await axios.post('http://localhost:8888/messages', this.form).catch(error => {
-          if(error.response != 201){
-            this.message = "メッセージ作成に失敗しました"
-          }else {
-            this.message = "メッセージ作成に成功しました"
-          }
-        })
+       const res = await axios.post('http://localhost:8888/messages', this.form).catch(error => {
+          console.log(error);
+          this.message = "メッセージ作成に失敗しました";
+        });
+
+        if(res){
+          this.message = "メッセージ作成に成功しました";
+        } 
+
         this.show = true;
         setTimeout(() => {
           this.show = false}

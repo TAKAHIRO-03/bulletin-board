@@ -4,8 +4,6 @@ import javax.persistence.EntityNotFoundException;
 
 import com.springvuesample.api.EmptyJsonBody;
 import com.springvuesample.domain.User;
-import com.springvuesample.service.BranchService;
-import com.springvuesample.service.DepartmentService;
 import com.springvuesample.service.UserService;
 
 import org.springframework.http.HttpStatus;
@@ -29,8 +27,6 @@ import ma.glasnost.orika.MapperFactory;
 public class UserController {
 
     private final UserService userService;
-    private final BranchService branchService;
-    private final DepartmentService departmentService;
     private final MapperFactory mapperFactory;
 
     @GetMapping
@@ -46,7 +42,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable final String id) {
+    public ResponseEntity<?> findById(@PathVariable final Long id) {
         try {
             val user = userService.findById(id);
             val userResponse = UserResponse.builder().user(user).build();
@@ -57,21 +53,18 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> create(@RequestBody final UserForm dto) {
+    public ResponseEntity<HttpStatus> create(@RequestBody final UserForm form) {
         val mapper = mapperFactory.getMapperFacade(UserForm.class, User.class);
-        val user = mapper.map(dto);
-        user.setDepartment(departmentService.getOne(dto.getDepartment()));
-        user.setBranch(branchService.getOne(dto.getBranch()));
-        this.userService.create(user);
+        this.userService.create(mapper.map(form));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<HttpStatus> update(@PathVariable final String id, @RequestBody final UserForm dto) {
+    public ResponseEntity<HttpStatus> update(@PathVariable final Long id, @RequestBody final UserForm form) {
 
         try {
             val mapper = mapperFactory.getMapperFacade(UserForm.class, User.class);
-            this.userService.update(id, mapper.map(dto));
+            this.userService.update(id, mapper.map(form));
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (final EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -82,7 +75,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable final String id) {
+    public ResponseEntity<HttpStatus> delete(@PathVariable final Long id) {
         this.userService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

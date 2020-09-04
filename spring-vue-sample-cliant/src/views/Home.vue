@@ -43,7 +43,7 @@
             {{ '投稿日時:' + message.createdDate }}
           </div>
           <div>
-            <el-button type="primary" @click="deleteMessage">削除</el-button>
+            <el-button type="primary" @click="deleteMessage(message.id)">削除</el-button>
           </div>
         </div>
         <br>
@@ -131,7 +131,7 @@
          }
       },
       deleteMessage: async function (id) {
-         await axios.delete('http://localhost:8888/message/' + id);
+         await axios.delete('http://localhost:8888/messages/' + id);
          await this.refresh();
       },
       getComments: async function () {

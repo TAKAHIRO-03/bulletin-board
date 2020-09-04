@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+import com.springvuesample.domain.Branch;
+import com.springvuesample.domain.Department;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -31,11 +34,11 @@ public class UserForm implements Serializable {
 
 	@Getter
 	@Setter
-	private Long branch;
+	private Branch branch;
 
 	@Getter
 	@Setter
-	private Long department;
+	private Department department;
 
 	private Integer isStopped;
 

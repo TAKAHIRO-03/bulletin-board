@@ -1,7 +1,5 @@
 package com.springvuesample.service;
 
-import java.sql.Timestamp;
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -10,47 +8,48 @@ import com.springvuesample.domain.Message;
 import com.springvuesample.repository.MessageRepository;
 
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 
 @Service
 @RequiredArgsConstructor
-public class MessageService {
+public class MessageService extends TemplateService<Message> {
 
     private final MessageRepository messageRepository;
 
+    @Override
     public List<Message> findAll() {
-        val messages = messageRepository.findAll();
-
-        if (CollectionUtils.isEmpty(messages)) {
-            return Collections.emptyList();
-        }
-
-        return messages;
+        return this.messageRepository.findAll();
     }
 
-    public Message findById(final String id) {
-        return messageRepository.findById(StringToLongConverter.parseIdParam(id))
-                .orElseThrow(IllegalArgumentException::new);
+    @Override
+    public Message findById(final Long id) {
+        return this.messageRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
+    @Override
     public void create(final Message message) {
         this.messageRepository.save(message);
     }
 
-    public void update(final String id, final Message message)
-            throws EntityNotFoundException, IllegalArgumentException {
-        val registedMessage = this.messageRepository.getOne(StringToLongConverter.parseIdParam(id));
+    @Override
+    public void update(final Long id, final Message message) throws EntityNotFoundException {
+        val registedMessage = this.messageRepository.getOne(id);
         registedMessage.setTitle(message.getTitle());
         registedMessage.setText(message.getText());
-        registedMessage.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
+        registedMessage.setUpdatedDate(message.getUpdatedDate());
         this.messageRepository.save(registedMessage);
     }
 
-    public void deleteById(final String id) {
-        this.messageRepository.deleteById(StringToLongConverter.parseIdParam(id));
+    @Override
+    public void deleteById(final Long id) {
+        this.messageRepository.deleteById(id);
+    }
+
+    @Override
+    public Message getOne(final Long id) throws EntityNotFoundException {
+        return this.messageRepository.getOne(id);
     }
 
 }

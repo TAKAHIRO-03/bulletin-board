@@ -14,17 +14,16 @@
         </el-form-item>
         <el-form-item label="支社">
             <el-select v-model="form.branch" placeholder="支社を選択してください">
-                <el-option v-for="branch in branches" :key="branch.id" :label="branch.name" :value="branch.id"></el-option>
+                <el-option v-for="branch in branches" :key="branch.id" :label="branch.name" :value="branch"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="部署">
             <el-select v-model="form.department" placeholder="部署を選択してください">
-                <el-option v-for="department in departments" :key="department.id" :label="department.name" :value="department.id"></el-option>
+                <el-option v-for="department in departments" :key="department.id" :label="department.name" :value="department"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="addUser">Create</el-button>
-          <el-button>Cancel</el-button>
+          <el-button type="primary" @click="updateUser(form.id)">更新</el-button>
         </el-form-item>
     </el-form>
 </template>
@@ -38,6 +37,7 @@
     data () {
       return {
         form: {
+          id: undefined,
           account: undefined,
           password: undefined,
           confirmPassword: undefined,
@@ -50,21 +50,34 @@
       }
     },
     created: async function () {
-      await this.getDepartments();
-      await this.getBranches();
+      this.refresh();
     },
     methods: {
+      refresh: async function () {
+        this.getUser();
+        this.getDepartments();
+        this.getBranches();
+      },
       getBranches: async function () {
         const res = await axios.get('http://localhost:8888/branches')
-        this.branches = res.data.branches
+        this.branches = res.data.branches;
       },
       getDepartments: async function () {
         const res = await axios.get('http://localhost:8888/departments')
-        this.departments = res.data.departments
+        this.departments = res.data.departments;
       },
-      addUser: async function () {
-        await axios.post('http://localhost:8888/users', this.form)
-        this.$router.push('currency') 
+      updateUser: async function () {
+        await axios.patch('http://localhost:8888/users/' + this.$route.query.id , this.form);
+        this.$router.push('management');
+      },
+      getUser: async function () {
+        const res = await axios.get('http://localhost:8888/users/' + this.$route.query.id);
+        const user = res.data.user;
+        this.$set(this.form, 'id', user.id);
+        this.$set(this.form, 'account', user.account);
+        this.$set(this.form, 'name', user.name);
+        this.$set(this.form, 'branch', user.branch);
+        this.$set(this.form, 'department', user.department);
       },
     }
   }

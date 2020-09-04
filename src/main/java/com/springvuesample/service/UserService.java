@@ -2,7 +2,6 @@ package com.springvuesample.service;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Collections;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -11,40 +10,36 @@ import com.springvuesample.repository.UserRepository;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService extends TemplateService<User> {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Override
     public List<User> findAll() {
-
-        val users = this.userRepository.findAll();
-
-        if (CollectionUtils.isEmpty(users)) {
-            return Collections.emptyList();
-        }
-
-        return users;
+        return this.userRepository.findAll();
     }
 
-    public User findById(final String id) {
-        return this.userRepository.findById(StringToLongConverter.parseIdParam(id)).orElseThrow(IllegalArgumentException::new);
+    @Override
+    public User findById(final Long id) {
+        return this.userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
+    @Override
     public void create(final User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         this.userRepository.save(user);
     }
 
-    public void update(final String id, final User user) throws EntityNotFoundException, IllegalArgumentException {
-        val registedUser = this.userRepository.getOne(StringToLongConverter.parseIdParam(id));
+    @Override
+    public void update(final Long id, final User user) throws EntityNotFoundException {
+        val registedUser = this.userRepository.getOne(id);
 
         if (!passwordEncoder.matches(user.getPassword(), registedUser.getPassword())) {
             registedUser.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -59,16 +54,13 @@ public class UserService {
         this.userRepository.save(registedUser);
     }
 
-    public void deleteById(final String id) {
-        this.userRepository.deleteById(StringToLongConverter.parseIdParam(id));
+    @Override
+    public void deleteById(final Long id) {
+        this.userRepository.deleteById(id);
     }
 
-    /**
-     * 
-     * 更新用
-     * 
-     */
-    public User getOne(final Long id){
+    @Override
+    public User getOne(final Long id) throws EntityNotFoundException {
         return this.userRepository.getOne(id);
     }
 

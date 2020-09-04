@@ -5,6 +5,7 @@ import javax.persistence.EntityNotFoundException;
 import com.springvuesample.api.EmptyJsonBody;
 import com.springvuesample.domain.Message;
 import com.springvuesample.service.MessageService;
+import com.springvuesample.service.UserService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ import ma.glasnost.orika.MapperFactory;
 public class MessageController {
 
     private final MessageService messageService;
+    private final UserService userService;
     private final MapperFactory mapperFactory;
 
     @GetMapping
@@ -42,7 +44,7 @@ public class MessageController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable final String id) {
+    public ResponseEntity<?> findById(@PathVariable final Long id) {
         try {
             val message = messageService.findById(id);
             val messageResponce = MessageResponce.builder().message(message).build();
@@ -56,12 +58,15 @@ public class MessageController {
     public ResponseEntity<HttpStatus> create(@RequestBody final MessageForm form) {
         val mapper = mapperFactory.getMapperFacade(MessageForm.class, Message.class);
         val message = mapper.map(form);
+        val user = userService.getOne(form.getUserId());
+        message.setUser(user);
+
         this.messageService.create(message);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<HttpStatus> update(@PathVariable final String id, @RequestBody final MessageForm form) {
+    public ResponseEntity<HttpStatus> update(@PathVariable final Long id, @RequestBody final MessageForm form) {
 
         try {
             val mapper = mapperFactory.getMapperFacade(MessageForm.class, Message.class);
@@ -76,7 +81,7 @@ public class MessageController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable final String id) {
+    public ResponseEntity<HttpStatus> delete(@PathVariable final Long id) {
         this.messageService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

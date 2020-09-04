@@ -44,7 +44,7 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable final String id) {
+    public ResponseEntity<?> findById(@PathVariable final Long id) {
         try {
             val comment = commentService.findById(id);
             val commentResponce = CommentResponce.builder().comment(comment).build();
@@ -65,7 +65,7 @@ public class CommentController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<HttpStatus> update(@PathVariable final String id, @RequestBody final CommentForm form) {
+    public ResponseEntity<HttpStatus> update(@PathVariable final Long id, @RequestBody final CommentForm form) {
 
         try {
             val mapper = mapperFactory.getMapperFacade(CommentForm.class, Comment.class);
@@ -73,14 +73,12 @@ public class CommentController {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (final EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (final IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable final String id) {
+    public ResponseEntity<HttpStatus> delete(@PathVariable final Long id) {
         this.commentService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
